@@ -9,48 +9,14 @@ import Foundation
 import RealityKit
 import UIKit
 
-enum Participate{
-    case red
-    case blue
-    case initialization
-}
-
-class PieceComponent: Component{
-    //whether the piece has been tapped
-    var isTap: Bool = false
-    //2为透明，0，1为双方棋子
-    var participate: Participate = .initialization
-    //color of piece
-    var pieceColor: UIColor{
-        get{
-            switch participate{
-            case .blue:
-                return .systemBlue
-            case .red:
-                return .systemRed
-            default:
-                return .clear
-            }
-        }
-    }
-    
-    init(participate: Participate){
-        self.participate = participate
-    }
-}
-
-protocol HasPiece{
-    var piece: PieceComponent? { get set }
-}
-
 class Piece: Entity, HasModel, HasCollision, HasPiece{
     var piece: PieceComponent?
     
     //constructor
-    init(participate: Participate) {
+    init(participate: Participate, initialColor: UIColor, initialPositionIn2D: SIMD2<Int>) {
         super.init()
         
-        self.piece = PieceComponent(participate: participate)
+        self.piece = PieceComponent(participate: participate,initialColor: initialColor, initialPositionIn2D: initialPositionIn2D)
         //visible model
         let modelComponent = ModelComponent(mesh: MeshResource.generatePlane(width: 0.14, depth: 0.14, cornerRadius: 0.07), materials: [SimpleMaterial(color: self.piece!.pieceColor, isMetallic: false)])
         self.model = modelComponent

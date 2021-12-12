@@ -16,6 +16,8 @@
 		318C06162765B9F90001F580 /* CheckBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318C06152765B9F90001F580 /* CheckBoard.swift */; };
 		318C06182765BC3E0001F580 /* Piece.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318C06172765BC3E0001F580 /* Piece.swift */; };
 		318C061A2765D5B20001F580 /* Block.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318C06192765D5B20001F580 /* Block.swift */; };
+		318C061C2766130E0001F580 /* PieceComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318C061B2766130E0001F580 /* PieceComponent.swift */; };
+		318C061E276615D80001F580 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318C061D276615D80001F580 /* Model.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +31,8 @@
 		318C06152765B9F90001F580 /* CheckBoard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckBoard.swift; sourceTree = "<group>"; };
 		318C06172765BC3E0001F580 /* Piece.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Piece.swift; sourceTree = "<group>"; };
 		318C06192765D5B20001F580 /* Block.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Block.swift; sourceTree = "<group>"; };
+		318C061B2766130E0001F580 /* PieceComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieceComponent.swift; sourceTree = "<group>"; };
+		318C061D276615D80001F580 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,6 +88,7 @@
 			isa = PBXGroup;
 			children = (
 				318C06152765B9F90001F580 /* CheckBoard.swift */,
+				318C061B2766130E0001F580 /* PieceComponent.swift */,
 				318C06172765BC3E0001F580 /* Piece.swift */,
 				318C06192765D5B20001F580 /* Block.swift */,
 			);
@@ -94,6 +99,7 @@
 			isa = PBXGroup;
 			children = (
 				31026A9A2764E3EF003901F2 /* CheckBoardARView.swift */,
+				318C061D276615D80001F580 /* Model.swift */,
 			);
 			path = CheckBoard;
 			sourceTree = "<group>";
@@ -168,9 +174,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				318C061C2766130E0001F580 /* PieceComponent.swift in Sources */,
 				318C06162765B9F90001F580 /* CheckBoard.swift in Sources */,
 				318C061A2765D5B20001F580 /* Block.swift in Sources */,
 				31026A812764D2AA003901F2 /* ContentView.swift in Sources */,
+				318C061E276615D80001F580 /* Model.swift in Sources */,
 				318C06182765BC3E0001F580 /* Piece.swift in Sources */,
 				31026A9B2764E3EF003901F2 /* CheckBoardARView.swift in Sources */,
 				31026A7F2764D2AA003901F2 /* AppDelegate.swift in Sources */,

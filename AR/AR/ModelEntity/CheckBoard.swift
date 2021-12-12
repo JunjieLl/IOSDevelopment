@@ -22,7 +22,7 @@ class CheckBoard: Entity, HasAnchoring, HasCollision{
         }
     }
     
-    var minimumBounds = SIMD2<Float>(0.5, 0.5)
+    var minimumBounds = SIMD2<Float>(1, 1)
     
     init(dimension: SIMD2<Int>){
         super.init()
@@ -32,7 +32,7 @@ class CheckBoard: Entity, HasAnchoring, HasCollision{
         let anchorComponent = AnchoringComponent(AnchoringComponent.Target.plane(.horizontal, classification: .any, minimumBounds: minimumBounds))
         self.anchoring = anchorComponent
         // for gesture: scale move and rotate
-        self.collision = CollisionComponent(shapes: [ShapeResource.generateBox(size: [20,0.5,20])])
+        self.collision = CollisionComponent(shapes: [ShapeResource.generateBox(size: [20, 0.5, 20])])
         
         let maxDim = dim!.max()
         let minBound = minimumBounds.min()
@@ -48,9 +48,9 @@ class CheckBoard: Entity, HasAnchoring, HasCollision{
                 let color = count % 2 == 0 ? UIColor.white: UIColor.black
                 count += 1
                 
-                let block = Block(size: [0.2,0.05,0.2], color: color)
+                let block = Block(size: [0.2, 0.05, 0.2], color: color, initialPositionIn2D: [i,j])
                 //coordinate space in view
-                block.position = SIMD3<Float>(Float(j)*0.2,0,Float(i)*0.2)
+                block.position = SIMD3<Float>(Float(j)*0.2, 0, Float(i)*0.2)
                 
                 self.addChild(block)
             }
