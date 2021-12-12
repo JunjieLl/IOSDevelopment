@@ -16,6 +16,9 @@ class CheckBoardARView: ARView, ARCoachingOverlayViewDelegate{
     //gamedata
     var model = Model(dimension: [10, 10])
     
+    //checkboard
+    var checkBoard: CheckBoard?
+    
     // add coachingOverlay
     func addARCoaching(){
         let coachingOverlay = ARCoachingOverlayView()
@@ -38,6 +41,7 @@ class CheckBoardARView: ARView, ARCoachingOverlayViewDelegate{
     //add checkboard to the view
     func addCheckBoard(){
         let checkBoard = CheckBoard(dimension: model.dimension)
+        self.checkBoard = checkBoard
         self.scene.addAnchor(checkBoard)
         //so that we can drag, scale, rotate the checkboard to fit our view
         self.installGestures(.all, for: checkBoard)
@@ -48,6 +52,7 @@ class CheckBoardARView: ARView, ARCoachingOverlayViewDelegate{
     }
     
     @objc func tapAction(_ sender: UITapGestureRecognizer? = nil){
+        //debug
         print("tapped")
         guard let touchPosition = sender?.location(in: self) else{
             return
@@ -70,12 +75,21 @@ class CheckBoardARView: ARView, ARCoachingOverlayViewDelegate{
     }
     // check whether is the game ends
     func checkIsGameComplete(point: SIMD2<Int>){
+        var entity: Winner
         let result = model.checkWhoWinAt(point: point)
         switch result{
         case 1:
-            print("blue wins")
+            entity = Winner(content: "blue wins")
+            entity.scale = self.checkBoard!.scale / 7.0
+            entity.position = [-Float(model.dimension[1])*0.2/2, 0.2, 0]
+            entity.transform.rotation = simd_quatf(angle: -.pi/6, axis: [1, 0, 0])
+            self.checkBoard?.addChild(entity)
         case 2:
-            print("red wins")
+            entity = Winner(content: "red wins")
+            entity.scale = self.checkBoard!.scale / 7.0
+            entity.position = [-Float(model.dimension[1])*0.2/2, 0.2, 0]
+            entity.transform.rotation = simd_quatf(angle: -.pi/6, axis: [1, 0, 0])
+            self.checkBoard?.addChild(entity)
         case 0:
             print("game not complete, continue")
         case -1:
@@ -85,3 +99,4 @@ class CheckBoardARView: ARView, ARCoachingOverlayViewDelegate{
         }
     }
 }
+

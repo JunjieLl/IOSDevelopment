@@ -18,6 +18,7 @@
 		318C061A2765D5B20001F580 /* Block.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318C06192765D5B20001F580 /* Block.swift */; };
 		318C061C2766130E0001F580 /* PieceComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318C061B2766130E0001F580 /* PieceComponent.swift */; };
 		318C061E276615D80001F580 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318C061D276615D80001F580 /* Model.swift */; };
+		318C0620276626530001F580 /* Winner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318C061F276626530001F580 /* Winner.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +34,7 @@
 		318C06192765D5B20001F580 /* Block.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Block.swift; sourceTree = "<group>"; };
 		318C061B2766130E0001F580 /* PieceComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieceComponent.swift; sourceTree = "<group>"; };
 		318C061D276615D80001F580 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		318C061F276626530001F580 /* Winner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Winner.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,6 +93,7 @@
 				318C061B2766130E0001F580 /* PieceComponent.swift */,
 				318C06172765BC3E0001F580 /* Piece.swift */,
 				318C06192765D5B20001F580 /* Block.swift */,
+				318C061F276626530001F580 /* Winner.swift */,
 			);
 			path = ModelEntity;
 			sourceTree = "<group>";
@@ -178,6 +181,7 @@
 				318C06162765B9F90001F580 /* CheckBoard.swift in Sources */,
 				318C061A2765D5B20001F580 /* Block.swift in Sources */,
 				31026A812764D2AA003901F2 /* ContentView.swift in Sources */,
+				318C0620276626530001F580 /* Winner.swift in Sources */,
 				318C061E276615D80001F580 /* Model.swift in Sources */,
 				318C06182765BC3E0001F580 /* Piece.swift in Sources */,
 				31026A9B2764E3EF003901F2 /* CheckBoardARView.swift in Sources */,
