@@ -26,7 +26,7 @@ class CheckBoard: Entity, HasAnchoring, HasCollision{
         }
     }
     
-    var minimumBounds = SIMD2<Float>(1, 1)
+    var minimumBounds = SIMD2<Float>(0.5, 0.5)
     
     init(dimension: SIMD2<Int>){
         super.init()
@@ -64,6 +64,7 @@ class CheckBoard: Entity, HasAnchoring, HasCollision{
     }
     
     required init() {
-        fatalError("init() has not been implemented")
+        super.init()
+//        fatalError("init() has not been implemented")
     }
 }

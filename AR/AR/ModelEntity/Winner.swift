@@ -17,6 +17,6 @@ class Winner: Entity, HasModel{
     }
     
     required init() {
-        fatalError("init() has not been implemented")
+        super.init()
     }
 }

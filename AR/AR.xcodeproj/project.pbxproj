@@ -19,6 +19,8 @@
 		318C061C2766130E0001F580 /* PieceComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318C061B2766130E0001F580 /* PieceComponent.swift */; };
 		318C061E276615D80001F580 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318C061D276615D80001F580 /* Model.swift */; };
 		318C0620276626530001F580 /* Winner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318C061F276626530001F580 /* Winner.swift */; };
+		3197529E276A125100434571 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3197529D276A125100434571 /* Network.swift */; };
+		319752A0276A1D2300434571 /* RequestOwnerShip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3197529F276A1D2300434571 /* RequestOwnerShip.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +37,9 @@
 		318C061B2766130E0001F580 /* PieceComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieceComponent.swift; sourceTree = "<group>"; };
 		318C061D276615D80001F580 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		318C061F276626530001F580 /* Winner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Winner.swift; sourceTree = "<group>"; };
+		3197529C276A01E200434571 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		3197529D276A125100434571 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
+		3197529F276A1D2300434571 /* RequestOwnerShip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestOwnerShip.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +72,7 @@
 		31026A7D2764D2AA003901F2 /* AR */ = {
 			isa = PBXGroup;
 			children = (
+				3197529C276A01E200434571 /* Info.plist */,
 				31026A9C2765AC34003901F2 /* ModelEntity */,
 				31026A9E2765AD0C003901F2 /* CheckBoard */,
 				31026A7E2764D2AA003901F2 /* AppDelegate.swift */,
@@ -94,6 +100,7 @@
 				318C06172765BC3E0001F580 /* Piece.swift */,
 				318C06192765D5B20001F580 /* Block.swift */,
 				318C061F276626530001F580 /* Winner.swift */,
+				3197529F276A1D2300434571 /* RequestOwnerShip.swift */,
 			);
 			path = ModelEntity;
 			sourceTree = "<group>";
@@ -103,6 +110,7 @@
 			children = (
 				31026A9A2764E3EF003901F2 /* CheckBoardARView.swift */,
 				318C061D276615D80001F580 /* Model.swift */,
+				3197529D276A125100434571 /* Network.swift */,
 			);
 			path = CheckBoard;
 			sourceTree = "<group>";
@@ -178,10 +186,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				318C061C2766130E0001F580 /* PieceComponent.swift in Sources */,
+				319752A0276A1D2300434571 /* RequestOwnerShip.swift in Sources */,
 				318C06162765B9F90001F580 /* CheckBoard.swift in Sources */,
 				318C061A2765D5B20001F580 /* Block.swift in Sources */,
 				31026A812764D2AA003901F2 /* ContentView.swift in Sources */,
 				318C0620276626530001F580 /* Winner.swift in Sources */,
+				3197529E276A125100434571 /* Network.swift in Sources */,
 				318C061E276615D80001F580 /* Model.swift in Sources */,
 				318C06182765BC3E0001F580 /* Piece.swift in Sources */,
 				31026A9B2764E3EF003901F2 /* CheckBoardARView.swift in Sources */,
@@ -320,7 +330,11 @@
 				DEVELOPMENT_TEAM = 2F4LQ9UW58;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = AR/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "";
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_NSCameraUsageDescription = "";
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UIRequiredDeviceCapabilities = arkit;
@@ -351,7 +365,11 @@
 				DEVELOPMENT_TEAM = 2F4LQ9UW58;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = AR/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "";
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_NSCameraUsageDescription = "";
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UIRequiredDeviceCapabilities = arkit;

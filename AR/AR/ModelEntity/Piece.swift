@@ -25,6 +25,7 @@ class Piece: Entity, HasModel, HasCollision, HasPiece{
     }
     
     required init() {
-        fatalError("init() has not been implemented")
+        super.init()
+//        fatalError("init() has not been implemented")
     }
 }

@@ -11,16 +11,33 @@ import CoreGraphics
 import CoreFoundation
 import UIKit
 import ARKit
+import MultipeerConnectivity
+
+enum Role{
+    case host
+    case client
+}
 
 class CheckBoardARView: ARView, ARCoachingOverlayViewDelegate{
     //gamedata
     var model = Model(dimension: [10, 10])
+    //host or client
+    var role: Role = .client
     
     //checkboard
     var checkBoard: CheckBoard?
     
+    var devicePeerID: MCPeerID = MCPeerID(displayName: UIDevice.current.name)
+    
+    //McSession for colaborate
+    var mcSession: MCSession?
+    var mcAdvertiser: MCNearbyServiceAdvertiser?
+    var mcBrowser: MCNearbyServiceBrowser?
+
     // add coachingOverlay
     func addARCoaching(){
+        self.setupSyncService()
+        
         let coachingOverlay = ARCoachingOverlayView()
         
         coachingOverlay.delegate = self
@@ -35,8 +52,10 @@ class CheckBoardARView: ARView, ARCoachingOverlayViewDelegate{
     //callback when coachingOverlay ends
     func coachingOverlayViewDidDeactivate(_ coachingOverlayView: ARCoachingOverlayView) {
         coachingOverlayView.activatesAutomatically = false
-        
-        self.addCheckBoard()
+        //important
+        if self.role == .host{
+            self.addCheckBoard()
+        }
     }
     //add checkboard to the view
     func addCheckBoard(){

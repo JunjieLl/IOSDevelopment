@@ -8,6 +8,7 @@
 import SwiftUI
 import RealityKit
 import ARKit
+import MultipeerConnectivity
 
 struct ContentView : View {
     var body: some View {
@@ -23,10 +24,12 @@ struct ARViewContainer: UIViewRepresentable {
     
     func makeUIView(context: Context) -> CheckBoardARView {
         let arView = CheckBoardARView(frame: .zero)
-        
+        //session configuration
         let sessionConfig = ARWorldTrackingConfiguration()
         sessionConfig.planeDetection = .horizontal
-        
+        // multi peer
+        sessionConfig.isCollaborationEnabled = true
+        //session run
         arView.session.run(sessionConfig, options: [])
         
         arView.addARCoaching()
