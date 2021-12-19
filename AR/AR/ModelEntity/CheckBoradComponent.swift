@@ -1,23 +1,39 @@
 //
-//  Model.swift.swift
+//  CheckBoradComponent.swift
 //  AR
 //
-//  Created by Junjie Li on 12/12/21.
+//  Created by Junjie Li on 12/19/21.
 //
 
 import Foundation
+import RealityKit
 
-class Model{
-    //dimension should be even
+enum MyError: Error{
+    case BadDimension
+}
+
+struct CheckBoradComponent: Component, Codable{
+    //the size of checkBoard, dimension should be even
     var dimension: SIMD2<Int>
-    //0为未点击，1，2为双方， 1 蓝色， 2 红色
+    
+    //the data of the model
+    //1 蓝色， 2 红色, 3为白色，4为黑色
     var pieceMatrix: [[Int]]
     
-    init(dimension: SIMD2<Int>){
+    init(dimension: SIMD2<Int>) throws{
+        //dimension must be even
+        if dimension[0] % 2 != 0 || dimension[1] % 2 != 0{
+            throw MyError.BadDimension
+        }
         self.dimension = dimension
-        pieceMatrix = [[Int]](repeating: [Int](repeating: 0, count: dimension[1]), count: dimension[0])
+        
+        self.pieceMatrix = [[Int]](repeating: [Int](repeating: 0, count: dimension[1]), count: dimension[0])
     }
-    // 1 for blue, 2 for red, 0 for not complete, -1 for peer
+    
+    mutating func setPieceMatrix(position: SIMD2<Int>, player: Int){
+        self.pieceMatrix[position[0]][position[1]] = player
+    }
+    
     func checkWhoWinAt(point: SIMD2<Int>) -> Int{
         let x = point[0]
         let y = point[1]
@@ -100,4 +116,8 @@ class Model{
         // not complete
         return 0
     }
+}
+
+protocol HasCheckBoardComponent: Entity{
+    var checkBoardComponent: CheckBoradComponent? { get set }
 }

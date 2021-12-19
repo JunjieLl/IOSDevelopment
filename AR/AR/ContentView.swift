@@ -11,19 +11,49 @@ import ARKit
 import MultipeerConnectivity
 
 struct ContentView : View {
+    @State
+    private var isStartGame = false
+    
+    @State
+    private var role: Role = .client
+    
     var body: some View {
-        return ARViewContainer()
+        if isStartGame{
+            ARViewContainer(role: $role)
             .edgesIgnoringSafeArea(.all)
+        }
+        else{
+            VStack(alignment: .center, spacing: 10){
+                Text("Welcome to Gobang")
+                
+                Button(action: {
+                    isStartGame = true
+                    role = .host
+                }){
+                    Text("Host Game")
+                }
+                
+                Button(action: {
+                    isStartGame = true
+                    role = .client
+                }){
+                    Text("Join Game")
+                }
+            }
+        }
     }
 }
 
 struct ARViewContainer: UIViewRepresentable {
+    @Binding
+    var role: Role
+    
     func makeCoordinator() -> () {
         Coordinator()
     }
     
     func makeUIView(context: Context) -> CheckBoardARView {
-        let arView = CheckBoardARView(frame: .zero)
+        let arView = CheckBoardARView(role: role)
         //session configuration
         let sessionConfig = ARWorldTrackingConfiguration()
         sessionConfig.planeDetection = .horizontal

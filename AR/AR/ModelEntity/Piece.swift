@@ -10,22 +10,41 @@ import RealityKit
 import UIKit
 
 class Piece: Entity, HasModel, HasCollision, HasPiece{
-    var piece: PieceComponent?
+    var piece: PieceComponent?{
+        get{
+            return components[PieceComponent.self] as? PieceComponent
+        }
+        set{
+            components[PieceComponent.self] = newValue
+        }
+    }
     
-    //constructor
-    init(participate: Participate, initialColor: UIColor, initialPositionIn2D: SIMD2<Int>) {
+    
+    //player 1, 2, 3, 4
+    init(player: Int, positionInMemory: SIMD2<Int>){
         super.init()
-        
-        self.piece = PieceComponent(participate: participate,initialColor: initialColor, initialPositionIn2D: initialPositionIn2D)
+        //pieceComponent
+        self.piece = PieceComponent(positionInMemory: positionInMemory, player: player)
         //visible model
-        let modelComponent = ModelComponent(mesh: MeshResource.generatePlane(width: 0.14, depth: 0.14, cornerRadius: 0.07), materials: [SimpleMaterial(color: self.piece!.pieceColor, isMetallic: false)])
+        let material = SimpleMaterial(color: PieceComponent.getInitialColor(player: player)!, isMetallic: false)
+        let modelComponent = ModelComponent(mesh: MeshResource.generatePlane(width: 0.14, depth: 0.14, cornerRadius: 0.07), materials: [material])
         self.model = modelComponent
-        // collision for tap and find
+        //collision for func entits
         self.collision = CollisionComponent(shapes: [ShapeResource.generateBox(size: [0.14,0.05,0.14])])
+    }
+    //change piece color
+    func setPlayer(player: Int){
+        self.piece?.player = player
+        self.model?.materials = [SimpleMaterial(color: PieceComponent.getInitialColor(player: player)!, isMetallic: false)]
+    }
+    //player plays chess
+    func playChess(player: Int){
+        self.setPlayer(player: player)
+        self.piece?.isTap = true
     }
     
     required init() {
-        super.init()
 //        fatalError("init() has not been implemented")
+        super.init()
     }
 }

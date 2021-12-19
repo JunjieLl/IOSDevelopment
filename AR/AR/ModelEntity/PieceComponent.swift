@@ -9,42 +9,43 @@ import Foundation
 import RealityKit
 import UIKit
 //player
-enum Participate{
-    case red
-    case blue
-    case initialization
-}
 
-class PieceComponent: Component{
+
+// network synchronization
+struct PieceComponent: Component, Codable{
     //whether the piece has been tapped
     var isTap: Bool = false
-    //0为未点击，1，2为双方， 1 蓝色， 2 红色
-    var participate: Participate = .initialization
     
-    private let initialColor: UIColor
-    // use to check who wins
-    let initialPositionIn2D: SIMD2<Int>
-    //color of piece
-    var pieceColor: UIColor{
-        get{
-            switch participate{
-            case .blue:
-                return .systemBlue
-            case .red:
-                return .systemRed
-            default:
-                return initialColor
-            }
+    //participate 1 blue 2 red, 3(white) and 4(black) initial color consitent with block
+    var player: Int
+    
+    //getColor of the piece to render
+    static func getInitialColor(player: Int) -> UIColor?{
+        if player == 3{
+            return UIColor.white
         }
+        else if player == 4{
+            return .black
+        }
+        else if player == 1{
+            return .systemBlue
+        }
+        else if player == 2{
+            return .systemRed
+        }
+        return nil
     }
     
-    init(participate: Participate, initialColor: UIColor, initialPositionIn2D: SIMD2<Int>){
-        self.participate = participate
-        self.initialColor = initialColor
-        self.initialPositionIn2D = initialPositionIn2D
+    //map between memory and world
+    var positionInMemory: SIMD2<Int>
+    
+    //initializer
+    init(positionInMemory: SIMD2<Int>, player: Int){
+        self.positionInMemory = positionInMemory
+        self.player = player
     }
 }
 
 protocol HasPiece{
-    var piece: PieceComponent? { get set }
+    var piece: PieceComponent?{get set}
 }
