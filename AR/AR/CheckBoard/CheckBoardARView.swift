@@ -235,16 +235,19 @@ class CheckBoardARView: ARView, ARCoachingOverlayViewDelegate, ARSessionDelegate
             entity.position = [-Float((self.checkBoard?.checkBoardComponent?.dimension[1])!)*0.2/2, 0.2, 0]
             entity.transform.rotation = simd_quatf(angle: -.pi/6, axis: [1, 0, 0])
             self.checkBoard?.addChild(entity)
+            self.checkBoard?.checkBoardComponent?.isComplete = true
         case 2:
             entity = Winner(content: "red wins")
             entity.scale = self.checkBoard!.scale / 7.0
             entity.position = [-Float((self.checkBoard?.checkBoardComponent?.dimension[1])!)*0.2/2, 0.2, 0]
             entity.transform.rotation = simd_quatf(angle: -.pi/6, axis: [1, 0, 0])
             self.checkBoard?.addChild(entity)
+            self.checkBoard?.checkBoardComponent?.isComplete = true
         case 0:
             print("game not complete, continue")
         case -1:
             print("no one wins the game")
+            self.checkBoard?.checkBoardComponent?.isComplete = true
         default:
 //            print(result!)
             print("error")
