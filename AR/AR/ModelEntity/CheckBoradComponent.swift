@@ -20,6 +20,9 @@ struct CheckBoradComponent: Component, Codable{
     //1 蓝色， 2 红色, 3为白色，4为黑色
     var pieceMatrix: [[Int]]
     
+    //turn to play chess 3 - onePlayer = another player
+    var isTurn: Int = 1
+    
     init(dimension: SIMD2<Int>) throws{
         //dimension must be even
         if dimension[0] % 2 != 0 || dimension[1] % 2 != 0{
@@ -37,7 +40,7 @@ struct CheckBoradComponent: Component, Codable{
     func checkWhoWinAt(point: SIMD2<Int>) -> Int{
         let x = point[0]
         let y = point[1]
-        let myFlag = pieceMatrix[x][y]// 0, 1, 2
+        let myFlag = pieceMatrix[x][y]// 1, 2, 3, 4
         
         var myFlagCount = 0
         // |

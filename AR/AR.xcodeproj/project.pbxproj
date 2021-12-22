@@ -19,6 +19,7 @@
 		318C061C2766130E0001F580 /* PieceComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318C061B2766130E0001F580 /* PieceComponent.swift */; };
 		318C0620276626530001F580 /* Winner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318C061F276626530001F580 /* Winner.swift */; };
 		3197529E276A125100434571 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3197529D276A125100434571 /* Network.swift */; };
+		31D4F7732773484300D5800B /* PureAnchor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31D4F7722773484300D5800B /* PureAnchor.swift */; };
 		31E0171A276EFC8D00E4BD69 /* CheckBoradComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31E01719276EFC8D00E4BD69 /* CheckBoradComponent.swift */; };
 /* End PBXBuildFile section */
 
@@ -37,6 +38,7 @@
 		318C061F276626530001F580 /* Winner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Winner.swift; sourceTree = "<group>"; };
 		3197529C276A01E200434571 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		3197529D276A125100434571 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
+		31D4F7722773484300D5800B /* PureAnchor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PureAnchor.swift; sourceTree = "<group>"; };
 		31E01719276EFC8D00E4BD69 /* CheckBoradComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckBoradComponent.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -99,6 +101,7 @@
 				318C06192765D5B20001F580 /* Block.swift */,
 				318C061F276626530001F580 /* Winner.swift */,
 				31E01719276EFC8D00E4BD69 /* CheckBoradComponent.swift */,
+				31D4F7722773484300D5800B /* PureAnchor.swift */,
 			);
 			path = ModelEntity;
 			sourceTree = "<group>";
@@ -192,6 +195,7 @@
 				318C06182765BC3E0001F580 /* Piece.swift in Sources */,
 				31026A9B2764E3EF003901F2 /* CheckBoardARView.swift in Sources */,
 				31026A7F2764D2AA003901F2 /* AppDelegate.swift in Sources */,
+				31D4F7732773484300D5800B /* PureAnchor.swift in Sources */,
 				31026A832764D2AA003901F2 /* Experience.rcproject in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

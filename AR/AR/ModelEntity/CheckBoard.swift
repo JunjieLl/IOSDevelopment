@@ -9,7 +9,7 @@ import Foundation
 import RealityKit
 import UIKit
 
-class CheckBoard: Entity, HasAnchoring, HasCollision, HasCheckBoardComponent{
+class CheckBoard: Entity, HasCollision, HasCheckBoardComponent{
     //data of checkBoard
     var checkBoardComponent: CheckBoradComponent?{
         get{
@@ -23,12 +23,13 @@ class CheckBoard: Entity, HasAnchoring, HasCollision, HasCheckBoardComponent{
     init(dimension: SIMD2<Int>) throws{
         super.init()
         
+        self.name = "myCheckBoard"
         self.checkBoardComponent = try? CheckBoradComponent(dimension: dimension)
         
         //minimum bounds
         let minimunBounds = SIMD2<Float>(0.5, 0.5)
-        let anchorComponent = AnchoringComponent(AnchoringComponent.Target.plane(.horizontal, classification: .any, minimumBounds: minimunBounds))
-        self.anchoring = anchorComponent
+//        let anchorComponent = AnchoringComponent(AnchoringComponent.Target.plane(.horizontal, classification: .any, minimumBounds: minimunBounds))
+//        self.anchoring = anchorComponent
         
         //for gestures with collision
         let collisionComponent = CollisionComponent(shapes: [ShapeResource.generateBox(size: [20, 0.5, 20])])

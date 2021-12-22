@@ -44,12 +44,31 @@ class CheckBoardARView: ARView, ARCoachingOverlayViewDelegate, ARSessionDelegate
             return 2
         }
     }
-    
     //host or client
     var role: Role?
     
     //checkboard entity
-    var checkBoard: CheckBoard?
+    //not sync through network
+    var checkBoard: CheckBoard?{
+        if self.scene.anchors.count > 0{
+            return self.scene.anchors[0].children[0] as? CheckBoard
+        }
+        return nil
+    }
+    
+    //turn
+    var isTurn: Bool{
+        get{
+            (self.checkBoard?.checkBoardComponent?.isTurn)! == self.player
+        }
+    }
+    //change turn
+    func changeTurn(){
+        self.checkBoard?.checkBoardComponent?.isTurn = 3 - (self.checkBoard?.checkBoardComponent?.isTurn)!
+    }
+    
+    //mutex for multi thread
+    var mutex = 1
     
     var devicePeerID: MCPeerID = MCPeerID(displayName: UIDevice.current.name)
     
@@ -93,9 +112,12 @@ class CheckBoardARView: ARView, ARCoachingOverlayViewDelegate, ARSessionDelegate
     }
     //add checkboard to the view
     func addCheckBoard(){
+        let pureAnchor = PureAnchor(name: "anchor")
+        
         let checkBoard = try? CheckBoard(dimension: [10,10])
-        self.checkBoard = checkBoard
-        self.scene.addAnchor(checkBoard!)
+        pureAnchor.addChild(checkBoard!)
+//        self.checkBoard = checkBoard
+        self.scene.addAnchor(pureAnchor)
         //so that we can drag, scale, rotate the checkboard to fit our view
         self.installGestures(.all, for: checkBoard!)
     }
@@ -106,16 +128,59 @@ class CheckBoardARView: ARView, ARCoachingOverlayViewDelegate, ARSessionDelegate
             touchEntity.playChess(player: player)
             // update data
             let piecePositionIn2D = touchEntity.piece?.positionInMemory
+            //by this way we can hava the synchronization
             self.checkBoard?.checkBoardComponent?.setPieceMatrix(position: piecePositionIn2D!, player: player)
+            
             //check whther the game is completed: one of participate has won the game or non
             checkIsGameComplete(point: piecePositionIn2D!)
         }
     }
     
+    func touchEntity(piece: Piece){
+        if piece.isOwner{
+            print("piece owner is self")
+            touchPiece(touchEntity: piece)
+            changeTurn()
+        }
+        else{
+            piece.requestOwnership(){result in
+                if result == .granted{
+                    print("piece authorized")
+                    self.touchPiece(touchEntity: piece)
+                    self.changeTurn()
+                }
+                else{
+                    print("piece unauthorized, retry please")
+                }
+            }
+        }
+    }
+    
+    func checkWhetherBeenPlaced(position: SIMD2<Int>) -> Bool{
+        let chessPlayer = self.checkBoard?.checkBoardComponent?.pieceMatrix[position[0]][position[1]]
+        if chessPlayer == 1 || chessPlayer == 2{
+            return true
+        }
+        return false
+    }
+    
     @objc func tapAction(_ sender: UITapGestureRecognizer? = nil){
+        if mutex < 1{
+            print("mutex")
+            return
+        }
+        mutex -= 1//==0
+
         //debug
         print("tapped")
+        if !isTurn{
+            print("It's not my turn")
+            mutex += 1
+            return
+        }
+        
         guard let touchPosition = sender?.location(in: self) else{
+            mutex += 1
             return
         }
         //debug
@@ -123,23 +188,38 @@ class CheckBoardARView: ARView, ARCoachingOverlayViewDelegate, ARSessionDelegate
         // tap piece !
         for touchEntity in self.entities(at: touchPosition){
             if let touchEntity = touchEntity as? Piece{
+                if !isTurn{
+                    print("It's not my turn")
+                    mutex += 1
+                    return
+                }
+                //debug
                 print(touchEntity)
-                if touchEntity.isOwner{
-                    touchPiece(touchEntity: touchEntity)
+                //check is whether been placed
+                if checkWhetherBeenPlaced(position: touchEntity.piece!.positionInMemory){
+                    print("It has been placed!")
+                    mutex += 1
+                    return
+                }
+                //request ownership of checkboard as needed
+                if (self.checkBoard?.isOwner)!{
+                    print("checkboard ownership is self")
+                    self.touchEntity(piece: touchEntity)
                 }
                 else{
-                    touchEntity.requestOwnership(){result in
+                    self.checkBoard?.requestOwnership {result in
                         if result == .granted{
-                            print("authorized")
-                            self.touchPiece(touchEntity: touchEntity)
+                            print("checkboard ownership authorized")
+                            self.touchEntity(piece: touchEntity)
                         }
                         else{
-                            print("unauthorized, retry please")
+                            print("checkboard ownership unauthorized")
                         }
                     }
                 }
             }
         }
+        mutex += 1
     }
     // check whether the game ends
     func checkIsGameComplete(point: SIMD2<Int>){
@@ -163,6 +243,7 @@ class CheckBoardARView: ARView, ARCoachingOverlayViewDelegate, ARSessionDelegate
         case -1:
             print("no one wins the game")
         default:
+//            print(result!)
             print("error")
         }
     }
