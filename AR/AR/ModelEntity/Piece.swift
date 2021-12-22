@@ -36,6 +36,8 @@ class Piece: Entity, HasModel, HasCollision, HasPiece{
     func setPlayer(player: Int){
         self.piece?.player = player
         self.model?.materials = [SimpleMaterial(color: PieceComponent.getInitialColor(player: player)!, isMetallic: false)]
+        //debug
+        print(PieceComponent.getInitialColor(player: player)!)
     }
     //player plays chess
     func playChess(player: Int){

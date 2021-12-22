@@ -60,7 +60,7 @@ class CheckBoardARView: ARView, ARCoachingOverlayViewDelegate, ARSessionDelegate
     var isTurn: Bool{
         get{
             if let c = self.checkBoard{
-                return (c.checkBoardComponent?.isTurn)! == self.player && !(c.checkBoardComponent?.isComplete)!
+                return (c.checkBoardComponent?.isTurn)! == self.player && !((c.checkBoardComponent?.isComplete)!)
             }
             return false
         }
@@ -133,7 +133,6 @@ class CheckBoardARView: ARView, ARCoachingOverlayViewDelegate, ARSessionDelegate
             let piecePositionIn2D = touchEntity.piece?.positionInMemory
             //by this way we can hava the synchronization
             self.checkBoard?.checkBoardComponent?.setPieceMatrix(position: piecePositionIn2D!, player: player)
-            
             //check whther the game is completed: one of participate has won the game or non
             checkIsGameComplete(point: piecePositionIn2D!)
         }

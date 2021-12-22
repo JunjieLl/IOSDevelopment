@@ -21,11 +21,17 @@ extension CheckBoardARView: MCSessionDelegate, MCNearbyServiceAdvertiserDelegate
     func session(_ session: MCSession, peer peerID: MCPeerID, didChange state: MCSessionState) {
         switch state {
         case .notConnected:
+            if self.role == .host{
+                self.mcAdvertiser?.startAdvertisingPeer()
+            }
             print("notconnected \(peerID.displayName)")
         case .connecting:
             print("connecting \(peerID.displayName)")
         case .connected:
             print("connected \(peerID.displayName)")
+            if self.role == .host{
+                self.mcAdvertiser?.stopAdvertisingPeer()
+            }
 //            self.mcAdvertiser?.stopAdvertisingPeer()
 //            self.mcBrowser?.stopBrowsingForPeers()
         default:

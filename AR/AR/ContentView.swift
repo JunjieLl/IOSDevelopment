@@ -26,9 +26,8 @@ struct ContentView : View {
             ZStack{
                 VStack(alignment: .center, spacing: 20){
                     HStack{
-                        Image(systemName: "checkerboard.shield")
+                        Image(systemName: "checkerboard.rectangle")
                         Text("Welcome to Gobang")
-                        Image(systemName: "checkerboard.shield")
                     }
                     .font(Font.largeTitle)
                     
@@ -36,7 +35,7 @@ struct ContentView : View {
                         isStartGame = true
                         role = .host
                     }){
-                        Image(systemName: "checkerboard.rectangle")
+                        Image(systemName: "checkerboard.shield")
                         Text("Host Game")
                     }
                     .font(.title)
@@ -50,7 +49,7 @@ struct ContentView : View {
                         isStartGame = true
                         role = .client
                     }){
-                        Image(systemName: "checkerboard.rectangle")
+                        Image(systemName: "checkerboard.shield")
                         Text("Join Game")
                     }
                     .font(.title)

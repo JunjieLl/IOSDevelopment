@@ -105,12 +105,11 @@ struct CheckBoradComponent: Component, Codable{
         if myFlagCount >= 5{
             return myFlag
         }
-        
         // total piece in checkboard
         var count = 0
         for i in 0 ..< dimension[0]{
             for j in 0 ..< dimension[1]{
-                if pieceMatrix[i][j] > 0{
+                if pieceMatrix[i][j] == 1 || pieceMatrix[i][j] == 2{
                     count += 1
                 }
             }
