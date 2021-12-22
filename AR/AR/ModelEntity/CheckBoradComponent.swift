@@ -23,6 +23,9 @@ struct CheckBoradComponent: Component, Codable{
     //turn to play chess 3 - onePlayer = another player
     var isTurn: Int = 1
     
+    //record isGameComplete
+    var isComplete: Bool = false
+    
     init(dimension: SIMD2<Int>) throws{
         //dimension must be even
         if dimension[0] % 2 != 0 || dimension[1] % 2 != 0{

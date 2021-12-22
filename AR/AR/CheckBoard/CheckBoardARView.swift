@@ -59,7 +59,10 @@ class CheckBoardARView: ARView, ARCoachingOverlayViewDelegate, ARSessionDelegate
     //turn
     var isTurn: Bool{
         get{
-            (self.checkBoard?.checkBoardComponent?.isTurn)! == self.player
+            if let c = self.checkBoard{
+                return (c.checkBoardComponent?.isTurn)! == self.player && !(c.checkBoardComponent?.isComplete)!
+            }
+            return false
         }
     }
     //change turn
