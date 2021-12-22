@@ -230,14 +230,14 @@ class CheckBoardARView: ARView, ARCoachingOverlayViewDelegate, ARSessionDelegate
         switch result{
         case 1:
             entity = Winner(content: "blue wins")
-            entity.scale = self.checkBoard!.scale / 7.0
+            entity.scale = self.checkBoard!.scale / 3.0
             entity.position = [-Float((self.checkBoard?.checkBoardComponent?.dimension[1])!)*0.2/2, 0.2, 0]
             entity.transform.rotation = simd_quatf(angle: -.pi/6, axis: [1, 0, 0])
             self.checkBoard?.addChild(entity)
             self.checkBoard?.checkBoardComponent?.isComplete = true
         case 2:
             entity = Winner(content: "red wins")
-            entity.scale = self.checkBoard!.scale / 7.0
+            entity.scale = self.checkBoard!.scale / 3.0
             entity.position = [-Float((self.checkBoard?.checkBoardComponent?.dimension[1])!)*0.2/2, 0.2, 0]
             entity.transform.rotation = simd_quatf(angle: -.pi/6, axis: [1, 0, 0])
             self.checkBoard?.addChild(entity)
