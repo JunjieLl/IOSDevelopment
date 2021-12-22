@@ -20,24 +20,45 @@ struct ContentView : View {
     var body: some View {
         if isStartGame{
             ARViewContainer(role: $role)
-            .edgesIgnoringSafeArea(.all)
+                .edgesIgnoringSafeArea(.all)
         }
         else{
-            VStack(alignment: .center, spacing: 10){
-                Text("Welcome to Gobang")
-                
-                Button(action: {
-                    isStartGame = true
-                    role = .host
-                }){
-                    Text("Host Game")
-                }
-                
-                Button(action: {
-                    isStartGame = true
-                    role = .client
-                }){
-                    Text("Join Game")
+            ZStack{
+                VStack(alignment: .center, spacing: 20){
+                    HStack{
+                        Image(systemName: "checkerboard.shield")
+                        Text("Welcome to Gobang")
+                        Image(systemName: "checkerboard.shield")
+                    }
+                    .font(Font.largeTitle)
+                    
+                    Button(action: {
+                        isStartGame = true
+                        role = .host
+                    }){
+                        Image(systemName: "checkerboard.rectangle")
+                        Text("Host Game")
+                    }
+                    .font(.title)
+                    .padding()
+                    .background(LinearGradient(gradient: Gradient(colors: [Color.green, Color.blue]), startPoint: .leading, endPoint: .trailing))
+                    .foregroundColor(Color.white)
+                    .cornerRadius(50)
+                    .padding(10)
+                    
+                    Button(action: {
+                        isStartGame = true
+                        role = .client
+                    }){
+                        Image(systemName: "checkerboard.rectangle")
+                        Text("Join Game")
+                    }
+                    .font(.title)
+                    .padding()
+                    .background(LinearGradient(gradient: Gradient(colors: [Color.green, Color.blue]), startPoint: .leading, endPoint: .trailing))
+                    .foregroundColor(Color.white)
+                    .cornerRadius(50)
+                    .padding(10)
                 }
             }
         }
