@@ -96,6 +96,11 @@ class CheckBoardARView: ARView, ARCoachingOverlayViewDelegate, ARSessionDelegate
         if self.isWin{
             return "you won it"
         }
+        else if let c = self.checkBoard{
+            if (c.checkBoardComponent?.isComplete)!{
+                return "you lose"
+            }
+        }
         if self.player == 1{
             return self.isTurn ? "blue" : "red"
         }
