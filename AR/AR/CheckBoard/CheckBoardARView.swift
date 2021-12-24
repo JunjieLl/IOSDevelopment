@@ -69,9 +69,14 @@ class CheckBoardARView: ARView, ARCoachingOverlayViewDelegate, ARSessionDelegate
     func changeTurn(){
         self.checkBoard?.checkBoardComponent?.isTurn = 3 - (self.checkBoard?.checkBoardComponent?.isTurn)!
     }
+    //is win
+    var isWin: Bool = false
     
     //mutex for multi thread
     var mutex = 1
+    //loading game
+    var isCompleteCoaching: Bool = false
+    var isAddCheckBboard: Bool = false
     
     var devicePeerID: MCPeerID = MCPeerID(displayName: UIDevice.current.name)
     
@@ -79,6 +84,23 @@ class CheckBoardARView: ARView, ARCoachingOverlayViewDelegate, ARSessionDelegate
     var mcSession: MCSession?
     var mcAdvertiser: MCNearbyServiceAdvertiser?
     var mcBrowser: MCNearbyServiceBrowser?
+    //text view
+    var textView: UITextView?
+    var whoTurn: String{
+        if !self.isCompleteCoaching{
+            return "waiting"
+        }
+        if self.role == .host && !self.isAddCheckBboard{
+            return "put board"
+        }
+        if self.isWin{
+            return "you won it"
+        }
+        if self.player == 1{
+            return self.isTurn ? "blue" : "red"
+        }
+        return self.isTurn ? "red" : "blue"
+    }
     
     func setUpGestures(){
         //add tap gesture
@@ -103,18 +125,44 @@ class CheckBoardARView: ARView, ARCoachingOverlayViewDelegate, ARSessionDelegate
         self.setUpGestures()
         //start
         self.addSubview(coachingOverlay)
+        
+        //add textView
+        self.textView = UITextView()
+        self.textView?.font = UIFont.systemFont(ofSize: 25)
+        self.textView!.text = self.whoTurn
+        self.textView?.translatesAutoresizingMaskIntoConstraints = false
+        self.textView?.textColor = .systemBlue
+        self.textView?.textAlignment = .center
+        self.textView?.isEditable = false
+        self.textView?.backgroundColor = .clear
+        self.addSubview(self.textView!)
+        let centerYConstraint = NSLayoutConstraint(item: self.textView!, attribute: .centerX, relatedBy: .equal, toItem: self, attribute: .centerX, multiplier: 1, constant: 0)
+        centerYConstraint.isActive = true
+        let topConstraint = NSLayoutConstraint(item: self.textView!, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1, constant: 40)
+        topConstraint.isActive = true
+        let heightConstraint = NSLayoutConstraint(item: self.textView!, attribute: .height, relatedBy: .equal, toItem: self, attribute: .height, multiplier: 0, constant: 45)
+        heightConstraint.isActive = true
+        let widthConstraint = NSLayoutConstraint(item: self.textView!, attribute: .width, relatedBy: .equal, toItem: self, attribute: .width, multiplier: 60, constant: 0)
+        widthConstraint.isActive = true
     }
     //callback when coachingOverlay ends
     func coachingOverlayViewDidDeactivate(_ coachingOverlayView: ARCoachingOverlayView) {
         coachingOverlayView.activatesAutomatically = false
+        
+        self.isCompleteCoaching = true
+        self.textView!.text = self.whoTurn
         //important
         //client has no need to render a new arview, instead reveives a view from host
-        if self.role == .host{
-            self.addCheckBoard()
-        }
+//        if self.role == .host && !self.isAddCheckBboard{
+//            self.addCheckBoard()
+//        }
     }
     //add checkboard to the view
-    func addCheckBoard(){
+    func addCheckBoard(transform: simd_float4x4){
+        // Create ARKit ARAnchor and add to ARSession
+        let arAnchor = ARAnchor(transform: transform)
+        self.session.add(anchor: arAnchor)
+        
         let pureAnchor = PureAnchor(name: "anchor")
         
         let checkBoard = try? CheckBoard(dimension: [10,10])
@@ -143,6 +191,7 @@ class CheckBoardARView: ARView, ARCoachingOverlayViewDelegate, ARSessionDelegate
             print("piece owner is self")
             touchPiece(touchEntity: piece)
             changeTurn()
+            self.textView!.text = self.whoTurn
         }
         else{
             piece.requestOwnership(){result in
@@ -150,6 +199,7 @@ class CheckBoardARView: ARView, ARCoachingOverlayViewDelegate, ARSessionDelegate
                     print("piece authorized")
                     self.touchPiece(touchEntity: piece)
                     self.changeTurn()
+                    self.textView!.text = self.whoTurn
                 }
                 else{
                     print("piece unauthorized, retry please")
@@ -167,11 +217,29 @@ class CheckBoardARView: ARView, ARCoachingOverlayViewDelegate, ARSessionDelegate
     }
     
     @objc func tapAction(_ sender: UITapGestureRecognizer? = nil){
+        self.textView!.text = self.whoTurn
+        if !self.isCompleteCoaching{
+            print("not complete coaching")
+            return
+        }
+        
         if mutex < 1{
             print("mutex")
             return
         }
         mutex -= 1//==0
+        //may addCheckBoard
+        if self.role == .host && !self.isAddCheckBboard{
+            guard let result = self.raycast(from: (sender?.location(in: self))!, allowing: .existingPlaneGeometry, alignment: .horizontal).first else{
+                mutex += 1
+                return
+            }
+            self.addCheckBoard(transform: result.worldTransform)
+            self.isAddCheckBboard = true
+            mutex += 1
+            self.textView!.text = self.whoTurn
+            return
+        }
 
         //debug
         print("tapped")
@@ -235,6 +303,9 @@ class CheckBoardARView: ARView, ARCoachingOverlayViewDelegate, ARSessionDelegate
             entity.transform.rotation = simd_quatf(angle: -.pi/6, axis: [1, 0, 0])
             self.checkBoard?.addChild(entity)
             self.checkBoard?.checkBoardComponent?.isComplete = true
+            if self.player == 1{
+                self.isWin = true
+            }
         case 2:
             entity = Winner(content: "red wins")
             entity.scale = self.checkBoard!.scale / 3.0
@@ -242,6 +313,9 @@ class CheckBoardARView: ARView, ARCoachingOverlayViewDelegate, ARSessionDelegate
             entity.transform.rotation = simd_quatf(angle: -.pi/6, axis: [1, 0, 0])
             self.checkBoard?.addChild(entity)
             self.checkBoard?.checkBoardComponent?.isComplete = true
+            if self.player == 2{
+                self.isWin = true
+            }
         case 0:
             print("game not complete, continue")
         case -1:
