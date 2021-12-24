@@ -24,6 +24,11 @@ struct ContentView : View {
         }
         else{
             ZStack{
+                Image("backg")
+                    .resizable()
+                    .scaledToFill()
+                    .ignoresSafeArea(.all)
+                    
                 VStack(alignment: .center, spacing: 20){
                     HStack{
                         Image(systemName: "checkerboard.rectangle")
