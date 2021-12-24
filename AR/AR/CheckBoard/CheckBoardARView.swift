@@ -180,6 +180,16 @@ class CheckBoardARView: ARView, ARCoachingOverlayViewDelegate, ARSessionDelegate
     
     func touchPiece(touchEntity: Piece){
         if !touchEntity.piece!.isTap{
+            //play sound
+            guard let path = Bundle.main.path(forResource: "music", ofType: "mp3")
+            else{
+                print("no path")
+                return
+            }
+            print(path)
+            let url = URL(fileURLWithPath: path)
+            let audioFile = try? AudioFileResource.load(contentsOf: url, withName: "", inputMode: .spatial, loadingStrategy: .preload, shouldLoop: false)
+            touchEntity.playAudio(audioFile!)
             //set piece color, player, istap
             touchEntity.playChess(player: player)
             // update data

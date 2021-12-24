@@ -20,6 +20,7 @@
 		318C0620276626530001F580 /* Winner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318C061F276626530001F580 /* Winner.swift */; };
 		3197529E276A125100434571 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3197529D276A125100434571 /* Network.swift */; };
 		31D4F7732773484300D5800B /* PureAnchor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31D4F7722773484300D5800B /* PureAnchor.swift */; };
+		31D4F77F2776133300D5800B /* music.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 31D4F77C27760B0000D5800B /* music.mp3 */; };
 		31E0171A276EFC8D00E4BD69 /* CheckBoradComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31E01719276EFC8D00E4BD69 /* CheckBoradComponent.swift */; };
 /* End PBXBuildFile section */
 
@@ -39,6 +40,7 @@
 		3197529C276A01E200434571 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		3197529D276A125100434571 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		31D4F7722773484300D5800B /* PureAnchor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PureAnchor.swift; sourceTree = "<group>"; };
+		31D4F77C27760B0000D5800B /* music.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = music.mp3; sourceTree = "<group>"; };
 		31E01719276EFC8D00E4BD69 /* CheckBoradComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckBoradComponent.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -72,6 +74,7 @@
 		31026A7D2764D2AA003901F2 /* AR */ = {
 			isa = PBXGroup;
 			children = (
+				31D4F77C27760B0000D5800B /* music.mp3 */,
 				3197529C276A01E200434571 /* Info.plist */,
 				31026A9C2765AC34003901F2 /* ModelEntity */,
 				31026A9E2765AD0C003901F2 /* CheckBoard */,
@@ -175,6 +178,7 @@
 			files = (
 				31026A882764D2AC003901F2 /* Preview Assets.xcassets in Resources */,
 				31026A852764D2AC003901F2 /* Assets.xcassets in Resources */,
+				31D4F77F2776133300D5800B /* music.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
