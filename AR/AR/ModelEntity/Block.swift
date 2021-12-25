@@ -22,13 +22,14 @@ class Block: Entity, HasModel, HasCollision{
         self.model = modelComponent
         
         let piece = Piece(player: player, positionInMemory: initialPositionIn2D)
-        piece.name = "piece"
+        
         piece.position.y = 0.05
         self.addChild(piece)
     }
     
-    func setChilePiece(player: Int, initialPositionIn2D: SIMD2<Int>){
-        let piece = self.findEntity(named: "piece") as? Piece
+    func setChilePiece(player: Int, initialPositionIn2D: SIMD2<Int>, pieceName: String){
+        let piece = self.children[0] as? Piece
+        piece?.name = pieceName
         //set map
         piece?.piece?.positionInMemory = initialPositionIn2D
         //set color, player

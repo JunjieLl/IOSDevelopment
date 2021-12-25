@@ -59,7 +59,8 @@ class CheckBoard: Entity, HasCollision, HasCheckBoardComponent{
         let newBlock = block.clone(recursive: true)
         let dimension = self.checkBoardComponent?.dimension
         
-        newBlock.setChilePiece(player: player, initialPositionIn2D: [i, j])
+        let pieceName = String(i) + String(j)
+        newBlock.setChilePiece(player: player, initialPositionIn2D: [i, j], pieceName: pieceName)
         //coordinate space in view
         //Panning to the center
         newBlock.model?.materials = [SimpleMaterial(color: PieceComponent.getInitialColor(player: player)!, isMetallic: false)]

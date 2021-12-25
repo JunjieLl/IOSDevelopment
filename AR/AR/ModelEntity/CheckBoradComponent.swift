@@ -121,6 +121,22 @@ struct CheckBoradComponent: Component, Codable{
         // not complete
         return 0
     }
+    
+    func getRandomFreePoint() -> SIMD2<Int>{
+        var list = [SIMD2<Int>]()
+        for i in 0 ..< self.dimension[0]{
+            for j in 0 ..< self.dimension[1]{
+                if self.pieceMatrix[i][j] != 1 || self.pieceMatrix[i][j] != 2{
+                    list.append([i,j])
+                }
+            }
+        }
+        if list.count == 0{
+            return [-1,-1]
+        }
+        let index = Int.random(in: 0 ..< list.count)
+        return list[index]
+    }
 }
 
 protocol HasCheckBoardComponent: Entity{

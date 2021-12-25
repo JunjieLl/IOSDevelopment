@@ -19,12 +19,15 @@ enum Role{
 }
 
 class CheckBoardARView: ARView, ARCoachingOverlayViewDelegate, ARSessionDelegate{
-    init(role: Role){
+    init(role: Role, isSelfPlay: Bool){
         self.role = role
+        self.isSelfPlay = isSelfPlay
         super.init(frame: .zero)
         self.session.delegate = self
     }
-
+    
+    var isSelfPlay: Bool?
+    
     @MainActor @objc required dynamic init?(coder decoder: NSCoder) {
         super.init(coder: decoder)
         //        fatalError("init(coder:) has not been implemented")
@@ -116,7 +119,9 @@ class CheckBoardARView: ARView, ARCoachingOverlayViewDelegate, ARSessionDelegate
     // add coachingOverlay
     func addARCoaching(){
         //network synchronization
-        self.setupSyncService()
+        if !self.isSelfPlay!{
+            self.setupSyncService()
+        }
         
         let coachingOverlay = ARCoachingOverlayView()
         
@@ -178,7 +183,7 @@ class CheckBoardARView: ARView, ARCoachingOverlayViewDelegate, ARSessionDelegate
         self.installGestures(.all, for: checkBoard!)
     }
     
-    func touchPiece(touchEntity: Piece){
+    func touchPiece(touchEntity: Piece, player: Int){
         if !touchEntity.piece!.isTap{
             //play sound
             guard let path = Bundle.main.path(forResource: "music", ofType: "mp3")
@@ -201,20 +206,41 @@ class CheckBoardARView: ARView, ARCoachingOverlayViewDelegate, ARSessionDelegate
         }
     }
     
+    func randomGetEntity() -> Piece?{
+        let freePoint = self.checkBoard?.checkBoardComponent?.getRandomFreePoint()
+        print(freePoint!)
+        if freePoint![0] == -1{
+            return nil
+        }
+        let pieceName = String(freePoint![0]) + String(freePoint![1])
+        let piece = self.scene.findEntity(named: pieceName)
+        return piece as? Piece
+    }
+    
     func touchEntity(piece: Piece){
         if piece.isOwner{
             print("piece owner is self")
-            touchPiece(touchEntity: piece)
+            touchPiece(touchEntity: piece, player: self.player)
             changeTurn()
             self.textView!.text = self.whoTurn
+            //self Play
+            if self.isSelfPlay!{
+                if let piece = self.randomGetEntity(){
+                    print("AI plays")
+                    self.touchPiece(touchEntity: piece, player: 3 - self.player)
+                    changeTurn()
+                    self.textView!.text = self.whoTurn
+                }
+            }
         }
         else{
             piece.requestOwnership(){result in
                 if result == .granted{
                     print("piece authorized")
-                    self.touchPiece(touchEntity: piece)
+                    self.touchPiece(touchEntity: piece, player: self.player)
                     self.changeTurn()
                     self.textView!.text = self.whoTurn
+                    //这里必然不是selfplay
                 }
                 else{
                     print("piece unauthorized, retry please")
@@ -313,7 +339,7 @@ class CheckBoardARView: ARView, ARCoachingOverlayViewDelegate, ARSessionDelegate
         switch result{
         case 1:
             entity = Winner(content: "blue wins")
-            entity.scale = self.checkBoard!.scale / 3.0
+            entity.scale = self.checkBoard!.scale/2
             entity.position = [-Float((self.checkBoard?.checkBoardComponent?.dimension[1])!)*0.2/2, 0.2, 0]
             entity.transform.rotation = simd_quatf(angle: -.pi/6, axis: [1, 0, 0])
             self.checkBoard?.addChild(entity)
@@ -323,7 +349,7 @@ class CheckBoardARView: ARView, ARCoachingOverlayViewDelegate, ARSessionDelegate
             }
         case 2:
             entity = Winner(content: "red wins")
-            entity.scale = self.checkBoard!.scale / 3.0
+            entity.scale = self.checkBoard!.scale/2
             entity.position = [-Float((self.checkBoard?.checkBoardComponent?.dimension[1])!)*0.2/2, 0.2, 0]
             entity.transform.rotation = simd_quatf(angle: -.pi/6, axis: [1, 0, 0])
             self.checkBoard?.addChild(entity)

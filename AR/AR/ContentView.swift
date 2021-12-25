@@ -17,9 +17,12 @@ struct ContentView : View {
     @State
     private var role: Role = .client
     
+    @State//false by default
+    private var isSelfPlay = false
+    
     var body: some View {
         if isStartGame{
-            ARViewContainer(role: $role)
+            ARViewContainer(role: $role, isSelfPlay: $isSelfPlay)
                 .edgesIgnoringSafeArea(.all)
         }
         else{
@@ -35,6 +38,21 @@ struct ContentView : View {
                         Text("Welcome to Gobang")
                     }
                     .font(Font.largeTitle)
+                    
+                    Button(action: {
+                        isStartGame = true
+                        role = .host
+                        isSelfPlay = true
+                    }){
+                        Image(systemName: "checkerboard.shield")
+                        Text("Play With AI")
+                    }
+                    .font(.title)
+                    .padding()
+                    .background(LinearGradient(gradient: Gradient(colors: [Color.green, Color.blue]), startPoint: .leading, endPoint: .trailing))
+                    .foregroundColor(Color.white)
+                    .cornerRadius(50)
+                    .padding(10)
                     
                     Button(action: {
                         isStartGame = true
@@ -73,12 +91,15 @@ struct ARViewContainer: UIViewRepresentable {
     @Binding
     var role: Role
     
+    @Binding
+    var isSelfPlay: Bool
+    
     func makeCoordinator() -> () {
         Coordinator()
     }
     
     func makeUIView(context: Context) -> CheckBoardARView {
-        let arView = CheckBoardARView(role: role)
+        let arView = CheckBoardARView(role: role, isSelfPlay: isSelfPlay)
         //session configuration
         let sessionConfig = ARWorldTrackingConfiguration()
         sessionConfig.planeDetection = .horizontal
