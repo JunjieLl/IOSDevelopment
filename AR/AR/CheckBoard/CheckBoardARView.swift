@@ -110,6 +110,10 @@ class CheckBoardARView: ARView, ARCoachingOverlayViewDelegate, ARSessionDelegate
         return self.isTurn ? "red" : "blue"
     }
     
+    func updateUITextView(timer: Timer){
+        self.textView!.text = self.whoTurn
+    }
+    
     func setUpGestures(){
         //add tap gesture
         let tapGestureRecongnizer = UITapGestureRecognizer(target: self, action: #selector(self.tapAction(_:)))
@@ -154,6 +158,8 @@ class CheckBoardARView: ARView, ARCoachingOverlayViewDelegate, ARSessionDelegate
         heightConstraint.isActive = true
         let widthConstraint = NSLayoutConstraint(item: self.textView!, attribute: .width, relatedBy: .equal, toItem: self, attribute: .width, multiplier: 60, constant: 0)
         widthConstraint.isActive = true
+        //update textView in certainInterval
+        Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true, block: self.updateUITextView)
     }
     //callback when coachingOverlay ends
     func coachingOverlayViewDidDeactivate(_ coachingOverlayView: ARCoachingOverlayView) {
@@ -217,6 +223,15 @@ class CheckBoardARView: ARView, ARCoachingOverlayViewDelegate, ARSessionDelegate
         return piece as? Piece
     }
     
+    func AIplayChess(timer: Timer){
+        if let piece = self.randomGetEntity(){
+            print("AI plays")
+            self.touchPiece(touchEntity: piece, player: 3 - self.player)
+            changeTurn()
+            self.textView!.text = self.whoTurn
+        }
+    }
+    
     func touchEntity(piece: Piece){
         if piece.isOwner{
             print("piece owner is self")
@@ -225,12 +240,8 @@ class CheckBoardARView: ARView, ARCoachingOverlayViewDelegate, ARSessionDelegate
             self.textView!.text = self.whoTurn
             //self Play
             if self.isSelfPlay!{
-                if let piece = self.randomGetEntity(){
-                    print("AI plays")
-                    self.touchPiece(touchEntity: piece, player: 3 - self.player)
-                    changeTurn()
-                    self.textView!.text = self.whoTurn
-                }
+                //play in 2s
+                Timer.scheduledTimer(withTimeInterval: 2, repeats: false, block: self.AIplayChess)
             }
         }
         else{
