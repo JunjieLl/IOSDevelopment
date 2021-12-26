@@ -22,7 +22,9 @@ struct ContentView : View {
     
     var body: some View {
         if isStartGame{
-            ARViewContainer(role: $role, isSelfPlay: $isSelfPlay)
+            ARViewContainer(role: $role, isSelfPlay: $isSelfPlay, quitClosure: {
+                self.isStartGame = false
+            })
                 .edgesIgnoringSafeArea(.all)
         }
         else{
@@ -57,6 +59,7 @@ struct ContentView : View {
                     Button(action: {
                         isStartGame = true
                         role = .host
+                        isSelfPlay = false
                     }){
                         Image(systemName: "checkerboard.shield")
                         Text("Host Game")
@@ -71,6 +74,7 @@ struct ContentView : View {
                     Button(action: {
                         isStartGame = true
                         role = .client
+                        isSelfPlay = false
                     }){
                         Image(systemName: "checkerboard.shield")
                         Text("Join Game")
@@ -98,8 +102,10 @@ struct ARViewContainer: UIViewRepresentable {
         Coordinator()
     }
     
+    var quitClosure: (()->Void)
+    
     func makeUIView(context: Context) -> CheckBoardARView {
-        let arView = CheckBoardARView(role: role, isSelfPlay: isSelfPlay)
+        let arView = CheckBoardARView(role: role, isSelfPlay: isSelfPlay, quitClosure: quitClosure)
         //session configuration
         let sessionConfig = ARWorldTrackingConfiguration()
         sessionConfig.planeDetection = .horizontal

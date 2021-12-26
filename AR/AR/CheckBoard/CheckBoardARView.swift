@@ -19,9 +19,14 @@ enum Role{
 }
 
 class CheckBoardARView: ARView, ARCoachingOverlayViewDelegate, ARSessionDelegate{
-    init(role: Role, isSelfPlay: Bool){
+    var isQuitGame: Bool?
+    var quitClosure: (() -> Void)?
+    
+    init(role: Role, isSelfPlay: Bool, quitClosure: @escaping ()->Void){
         self.role = role
         self.isSelfPlay = isSelfPlay
+        self.isQuitGame = false
+        self.quitClosure = quitClosure
         super.init(frame: .zero)
         self.session.delegate = self
     }
@@ -90,6 +95,9 @@ class CheckBoardARView: ARView, ARCoachingOverlayViewDelegate, ARSessionDelegate
     //text view
     var textView: UITextView?
     var whoTurn: String{
+        if self.isQuitGame!{
+            return "touch to quit"
+        }
         if !self.isCompleteCoaching{
             return "waiting"
         }
@@ -97,7 +105,7 @@ class CheckBoardARView: ARView, ARCoachingOverlayViewDelegate, ARSessionDelegate
             return "put board"
         }
         if self.isWin{
-            return "you won it"
+            return "you win"
         }
         else if let c = self.checkBoard{
             if (c.checkBoardComponent?.isComplete)!{
@@ -108,6 +116,13 @@ class CheckBoardARView: ARView, ARCoachingOverlayViewDelegate, ARSessionDelegate
             return self.isTurn ? "blue" : "red"
         }
         return self.isTurn ? "red" : "blue"
+    }
+    
+    var isComplete: Bool?{
+        if let c = self.checkBoard{
+            return c.checkBoardComponent?.isComplete
+        }
+        return false
     }
     
     func updateUITextView(timer: Timer){
@@ -224,6 +239,10 @@ class CheckBoardARView: ARView, ARCoachingOverlayViewDelegate, ARSessionDelegate
     }
     
     func AIplayChess(timer: Timer){
+        if self.isComplete!{
+            return
+        }
+        
         if let piece = self.randomGetEntity(){
             print("AI plays")
             self.touchPiece(touchEntity: piece, player: 3 - self.player)
@@ -269,6 +288,17 @@ class CheckBoardARView: ARView, ARCoachingOverlayViewDelegate, ARSessionDelegate
     }
     
     @objc func tapAction(_ sender: UITapGestureRecognizer? = nil){
+        if self.isQuitGame!{
+            //quit
+            self.quitClosure!()
+            self.removeFromSuperview()
+        }
+        
+        if self.isComplete!{
+            self.isQuitGame = true
+            return
+        }
+        
         self.textView!.text = self.whoTurn
         if !self.isCompleteCoaching{
             print("not complete coaching")
