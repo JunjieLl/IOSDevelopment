@@ -1,6 +1,4 @@
 <div style="font-size:40px;text-align:center;">MultiAR</div>
-<div style="font-size:32px;text-align:center;">指导教师：沈莹</div>
-<div style="font-size:32px;text-align:center;">1850668 李俊杰</div>
 
 
 
@@ -23,32 +21,32 @@ The code structure is shown below, and the role of each folder or file is explai
 ```sh
 .
 ├── AR
-│   ├── Assets.xcassets #Project resource folders, such as App icons and pictures used in the project.
-│   │   ├── AccentColor.colorset
-│   │   ├── AppIcon.appiconset
-│   │   └── backg.imageset
-│   ├── CheckBoard #AR scene construction (main logic) and online services.
-│   ├── Experience.rcproject #Reality Composer, an AR model modeling application from which app can call and manipulate models through code.
-│   │   ├── Library
-│   │   │   └── ProjectLibrary
-│   │   └── SceneThumbnails
-│   │       ├── A19524D5-6183-4F6E-ADBF-6174B51587E3.thumbnails
-│   │       ├── E0272227-6594-44C2-87D5-C83A0F26F634.thumbnails
-│   │       └── F9610871-0955-494F-A5C3-51D1A281BAB3.thumbnails
-│   ├── ModelEntity #The components and entities of the AR scene, the details will be introduced later
-│   └── Preview Content #Live Preview provided by Xcode
-│   │   └── Preview Assets.xcassets
-│   ├── AppDelegate.swift #Application initialization
-│   ├── Info.plist #App Service Configuration
-│   ├── ContentView.swift #Application Home
+│   ├── Assets.xcassets #Project resource folders, such as App icons and pictures used in the project.
+│   │   ├── AccentColor.colorset
+│   │   ├── AppIcon.appiconset
+│   │   └── backg.imageset
+│   ├── CheckBoard #AR scene construction (main logic) and online services.
+│   ├── Experience.rcproject #Reality Composer, an AR model modeling application from which app can call and manipulate models through code.
+│   │   ├── Library
+│   │   │   └── ProjectLibrary
+│   │   └── SceneThumbnails
+│   │       ├── A19524D5-6183-4F6E-ADBF-6174B51587E3.thumbnails
+│   │       ├── E0272227-6594-44C2-87D5-C83A0F26F634.thumbnails
+│   │       └── F9610871-0955-494F-A5C3-51D1A281BAB3.thumbnails
+│   ├── ModelEntity #The components and entities of the AR scene, the details will be introduced later
+│   └── Preview Content #Live Preview provided by Xcode
+│   │   └── Preview Assets.xcassets
+│   ├── AppDelegate.swift #Application initialization
+│   ├── Info.plist #App Service Configuration
+│   ├── ContentView.swift #Application Home
 └── AR.xcodeproj #Project startup file and project configuration
     ├── project.xcworkspace
-    │   ├── xcshareddata
-    │   │   └── swiftpm
-    │   └── xcuserdata
-    │       └── junjieli.xcuserdatad
+    │   ├── xcshareddata
+    │   │   └── swiftpm
+    │   └── xcuserdata
+    │       └── junjieli.xcuserdatad
     ├── xcshareddata
-    │   └── xcschemes
+    │   └── xcschemes
     └── xcuserdata
         └── junjieli.xcuserdatad
             ├── xcdebugger
