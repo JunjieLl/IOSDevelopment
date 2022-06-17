@@ -410,7 +410,7 @@ If multiple users are in the same LAN, **users cannot choose their opponents**.
 
 For multiple devices in the same local area network, **all discovered devices should be displayed to the user in a pop-up window** so that the user can choose to match.
 
-For situations like AR context disappearing and AR Coach not appearing, I need to know more about class ARSession. Detailed guidance on the Session lifecycle and **resuming sessions from interruptions** is provided in the [Apple documentation](https://sdeveloper.apple.com/documentation/arkit/managing_session_life_cycle_and_tracking_quality).
+For situations like AR context disappearing and AR Coach not appearing, I need to know more about class ARSession. Detailed guidance on the Session lifecycle and **resuming sessions from interruptions** is provided in the [Apple documentation](https://developer.apple.com/documentation/arkit/managing_session_life_cycle_and_tracking_quality).
 
 ![Sequence diagram with normal tracking state before the session is interrupted, then, after the interruption, proceeding from notAvailable to limited (initializing) to limited (relocalizing) to normal.](https://tva1.sinaimg.cn/large/e6c9d24egy1h3ajabziyzj20u203kglw.jpg)
 
